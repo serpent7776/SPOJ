@@ -1,5 +1,5 @@
 let rep n f =
-        for i = 1 to n do
+        for _ = 1 to n do
                 f ()
         done
 
@@ -41,11 +41,11 @@ let get_elem_to_move arr =
         in
         let s = Array.to_seqi arr in
         match s () with
-        | Cons (hd, rest) ->
+        | Seq.Cons (hd, rest) ->
                 let (_, el) as it = Seq.fold_left max_el hd rest in
                 if moveable it then Some it
                 else None
-        | Nil ->
+        | Seq.Nil ->
                 None
 
 let swap arr id1 id2 =
