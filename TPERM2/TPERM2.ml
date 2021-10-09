@@ -24,6 +24,25 @@ let gen_arr k =
                 }
         )
 
+let fold_arrayi fn arr =
+        let len = Array.length arr in
+        if len = 0 then None
+        else
+                let res = ref (0, arr.(0)) in
+                let elem = ref (0, arr.(0)) in
+                for i = 1 to (len - 1) do
+                        let next = ref (i, arr.(i)) in
+                        res := fn !res !next;
+                        elem := !next
+                done;
+                Some !res
+
+let option_filter pred = function
+        | None -> None
+        | Some x as opt ->
+                if pred x then opt
+                else None
+
 let get_elem_to_move arr =
         let len = Array.length arr in
         let nonfirst id = id > 0 in
@@ -35,18 +54,11 @@ let get_elem_to_move arr =
                 | L -> nonfirst id && smaller_L id
                 | R -> nonlast id && smaller_R id
         in
-        let max_el ((id1, e1) as it1) ((id2, e2) as it2) =
+        let max_el ((_, e1) as it1) ((_, e2) as it2) =
                 if (e1.ch > e2.ch && moveable it1) || not (moveable it2) then it1
                 else it2
         in
-        let s = Array.to_seqi arr in
-        match s () with
-        | Seq.Cons (hd, rest) ->
-                let (_, el) as it = Seq.fold_left max_el hd rest in
-                if moveable it then Some it
-                else None
-        | Seq.Nil ->
-                None
+        fold_arrayi max_el arr |> option_filter moveable
 
 let swap arr id1 id2 =
         let tmp = arr.(id1) in
