@@ -47,8 +47,8 @@ let get_elem_to_move arr =
         let len = Array.length arr in
         let nonfirst id = id > 0 in
         let nonlast id = id < len - 1 in
-        let smaller_L id = arr.(id) > arr.(id - 1) in
-        let smaller_R id = arr.(id) > arr.(id + 1) in
+        let smaller_L id = arr.(id).ch > arr.(id - 1).ch in
+        let smaller_R id = arr.(id).ch > arr.(id + 1).ch in
         let moveable (id, el) =
                 match el.d with
                 | L -> nonfirst id && smaller_L id
