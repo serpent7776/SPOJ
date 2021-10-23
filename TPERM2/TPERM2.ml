@@ -75,7 +75,7 @@ let rev = function
         | L -> R
         | R -> L
 
-let switch_dirs arr {ch = ch; d = d} =
+let switch_dirs arr {ch; d} =
         Array.iter (fun el ->
                 if el.ch > ch then el.d <- rev el.d
         ) arr;
@@ -85,7 +85,7 @@ let perms arr f =
         f arr;
         let rec proc = function
                 | None -> ()
-                | Some (id, ({ch = ch; d = d} as el) as it) ->
+                | Some (id, el as it) ->
                         let _ = move_elem arr it in
                         let _ = switch_dirs arr el in
                         let () = f arr in
@@ -98,6 +98,9 @@ let print_elem out_ch el =
 
 let print_arr out_ch arr =
         Array.iter (print_elem out_ch) arr
+
+let print_perm perm =
+        Printf.printf "%a\n" print_arr perm
 
 let _ =
         let () =
@@ -124,9 +127,7 @@ let _ =
                 rep t (fun () ->
                         Scanf.scanf "%d\n" (fun k ->
                                 let arr = gen_arr k in
-                                perms arr (fun perm ->
-                                        Printf.printf "%a\n" print_arr perm
-                                )
+                                perms arr print_perm
                         )
                 )
         )
