@@ -47,12 +47,12 @@ let get_elem_to_move arr =
         let len = Array.length arr in
         let nonfirst id = id > 0 in
         let nonlast id = id < len - 1 in
-        let smaller_L id = arr.(id).ch > arr.(id - 1).ch in
-        let smaller_R id = arr.(id).ch > arr.(id + 1).ch in
+        let smaller_left id = arr.(id).ch > arr.(id - 1).ch in
+        let smaller_right id = arr.(id).ch > arr.(id + 1).ch in
         let moveable (id, el) =
                 match el.d with
-                | L -> nonfirst id && smaller_L id
-                | R -> nonlast id && smaller_R id
+                | L -> nonfirst id && smaller_left id
+                | R -> nonlast id && smaller_right id
         in
         let max_el ((_, e1) as it1) ((_, e2) as it2) =
                 if (e1.ch > e2.ch && moveable it1) || not (moveable it2) then it1
@@ -71,13 +71,13 @@ let move_elem arr (id, el) =
         | L -> swap arr id (id - 1)
         | R -> swap arr id (id + 1)
 
-let rdiv = function
+let rev = function
         | L -> R
         | R -> L
 
 let switch_dirs arr {ch = ch; d = d} =
         Array.iter (fun el ->
-                if el.ch > ch then el.d <- rdiv el.d
+                if el.ch > ch then el.d <- rev el.d
         ) arr;
         arr
 
