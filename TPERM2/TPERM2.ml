@@ -13,16 +13,13 @@ type elem = {
         mutable d: dir;
 }
 
-let char_of_dir = function
-        | L -> 'L'
-        | R -> 'R'
+let nth_elem n = {
+        ch = nth_char n;
+        d = L;
+}
 
 let gen_arr k =
-        Array.init k (fun i -> {
-                        ch = nth_char i;
-                        d = L;
-                }
-        )
+        Array.init k nth_elem
 
 let fold_arrayi fn arr =
         let len = Array.length arr in
