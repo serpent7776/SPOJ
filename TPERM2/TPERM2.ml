@@ -42,14 +42,14 @@ let option_filter pred = function
 
 let get_elem_to_move arr =
         let len = Array.length arr in
-        let nonfirst id = id > 0 in
-        let nonlast id = id < len - 1 in
-        let smaller_left id = arr.(id).ch > arr.(id - 1).ch in
-        let smaller_right id = arr.(id).ch > arr.(id + 1).ch in
-        let moveable (id, el) =
+        let nonfirst idx = idx > 0 in
+        let nonlast idx = idx < len - 1 in
+        let smaller_left idx = arr.(idx).ch > arr.(idx - 1).ch in
+        let smaller_right idx = arr.(idx).ch > arr.(idx + 1).ch in
+        let moveable (idx, el) =
                 match el.d with
-                | L -> nonfirst id && smaller_left id
-                | R -> nonlast id && smaller_right id
+                | L -> nonfirst idx && smaller_left idx
+                | R -> nonlast idx && smaller_right idx
         in
         let max_el ((_, e1) as it1) ((_, e2) as it2) =
                 if (e1.ch > e2.ch && moveable it1) || not (moveable it2) then it1
@@ -63,10 +63,10 @@ let swap arr id1 id2 =
         arr.(id2) <- tmp;
         arr
 
-let move_elem arr (id, el) =
+let move_elem arr (idx, el) =
         match el.d with
-        | L -> swap arr id (id - 1)
-        | R -> swap arr id (id + 1)
+        | L -> swap arr idx (idx - 1)
+        | R -> swap arr idx (idx + 1)
 
 let rev = function
         | L -> R
@@ -82,7 +82,7 @@ let perms arr f =
         f arr;
         let rec proc = function
                 | None -> ()
-                | Some (id, el as it) ->
+                | Some (idx, el as it) ->
                         let _ = move_elem arr it in
                         let _ = switch_dirs arr el in
                         let () = f arr in
