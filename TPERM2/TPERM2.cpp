@@ -4,7 +4,7 @@
 #include <optional>
 #include <iterator>
 
-enum class Dir {
+enum class Dir : char {
 	L,
 	R,
 };
@@ -93,9 +93,9 @@ std::optional<It> get_elem_to_move(const Array& arr)
 	{
 		current = max_elem(current, next);
 	}
-	const auto max = It{current, arr[current]};
 	if (moveable(current, arr[current]))
 	{
+		const auto max = It{current, arr[current]};
 		return {max};
 	}
 	else
