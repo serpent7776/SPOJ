@@ -86,8 +86,8 @@ let perms arr f =
                         let _ = move_elem arr it in
                         let _ = switch_dirs arr el in
                         let () = f arr in
-                        let it = get_elem_to_move arr in
-                        proc it
+                        let it' = get_elem_to_move arr in
+                        proc it'
         in proc (get_elem_to_move arr)
 
 let print_elem out_ch el =
