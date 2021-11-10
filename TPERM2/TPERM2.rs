@@ -54,19 +54,6 @@ impl std::cmp::Eq for Elem {
 
 type It<'a> = (usize, &'a Elem);
 
-struct DisplayVec<'a, T> {
-    vec: &'a Vec<T>
-}
-
-impl<'a, T: std::fmt::Display> std::fmt::Display for DisplayVec<'a, T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        for e in self.vec.iter() {
-            write!(f, "{}", e)?;
-        }
-        Ok(())
-    }
-}
-
 pub fn main() {
     let t = read_int::<usize>();
     rep(t, run_test);
@@ -89,7 +76,10 @@ fn run_test() {
 }
 
 fn print(items: &Vec<Elem>) {
-    println!("{}", DisplayVec {vec: &items});
+    for e in items.iter() {
+        print!("{}", e.ch);
+    }
+    print!("\n");
 }
 
 fn move_elem<'a>(items: &mut Vec<Elem>, idx: usize, dir: Dir) {
