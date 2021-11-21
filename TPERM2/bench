@@ -1,0 +1,5 @@
+#!/bin/sh
+$@ < in-1 > /dev/null
+for i in $(seq 9); do
+	time $@ < in-2 > /dev/null
+done
