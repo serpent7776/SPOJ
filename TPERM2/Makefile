@@ -88,4 +88,7 @@ bench:
 	./bench luajit ./luajit 2>> ${BENCH_OUT}
 	@echo "swipl" >> ${BENCH_OUT}
 	./bench ./swipl 2>> ${BENCH_OUT}
-	awk -f stat.awk < $(BENCH_OUT)
+	@awk -f stat.awk < $(BENCH_OUT)
+
+stat:
+	@awk -f stat.awk < $(BENCH_OUT)
