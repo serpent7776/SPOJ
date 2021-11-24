@@ -15,10 +15,13 @@ cpp-gcc: TPERM2.cpp
 cpp-ref: TPERM2-ref.cpp
 	clang++ -Wall -Wextra -pedantic -O2 -o cpp-ref -std=c++17 -g TPERM2-ref.cpp
 
-c: c-gcc
+c: c-gcc c-clang
 
 c-gcc: TPERM2.c
 	gcc -Wall -Wextra -pedantic -O2 -o c-gcc -std=c17 -g TPERM2.c
+
+c-clang: TPERM2.c
+	clang -Wall -Wextra -pedantic -O2 -o c-clang -std=c17 -g TPERM2.c
 
 rust: TPERM2.rs
 	rustc -g -o ./rust -O TPERM2.rs
@@ -48,6 +51,8 @@ check:
 	diff -u out/cpp-ref out/ref-2 | head
 	./c-gcc < ${IN1} > out/c-gcc
 	diff -u out/c-gcc out/ref-1 | head
+	./c-clang < ${IN1} > out/c-clang
+	diff -u out/c-clang out/ref-1 | head
 	./rust < ${IN1} > out/rust
 	diff -u out/rust out/ref-1 | head
 	./ocaml < ${IN1} > out/ocaml
@@ -71,6 +76,8 @@ bench:
 	./bench ./cpp-ref 2>> ${BENCH_OUT}
 	@echo "c-gcc" >> ${BENCH_OUT}
 	./bench ./c-gcc 2>> ${BENCH_OUT}
+	@echo "c-clang" >> ${BENCH_OUT}
+	./bench ./c-clang 2>> ${BENCH_OUT}
 	@echo "rust" >> ${BENCH_OUT}
 	./bench ./rust 2>> ${BENCH_OUT}
 	@echo "ocaml" >> ${BENCH_OUT}
