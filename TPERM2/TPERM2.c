@@ -2,6 +2,7 @@
 
 #include <err.h>
 #include <sysexits.h>
+#include <limits.h>
 
 enum Dir
 {
@@ -17,14 +18,17 @@ struct Elem
 
 #define MAX_ARRAY_SIZE 26
 
-struct Elem array[MAX_ARRAY_SIZE];
+// 26 elements + 2 sentinel values: at the beginning and at the end
+static struct Elem g_array[MAX_ARRAY_SIZE + 2];
+
+static struct Elem* array = &g_array[1];
 
 int moveable(int idx, int size)
 {
 	switch (array[idx].dir)
 	{
-		case L: return idx > 0 && array[idx].ch > array[idx - 1].ch;
-		case R: return idx < size - 1 && array[idx].ch > array[idx + 1].ch;
+		case L: return array[idx].ch > array[idx - 1].ch;
+		case R: return array[idx].ch > array[idx + 1].ch;
 	}
 	__builtin_unreachable();
 }
@@ -41,11 +45,15 @@ void print_array(int size)
 void test(int size)
 {
 	// init array
-	for (int i = 0; i < size; ++i)
+	for (int i = 1; i <= size; ++i)
 	{
-		struct Elem e = {.ch = 'a' + i, .dir = L};
-		array[i] = e;
+		struct Elem e = {.ch = 'a' + i - 1, .dir = L};
+		g_array[i] = e;
 	}
+	// create sentinel values
+	struct Elem sentinel = {.ch = CHAR_MAX, .dir = L};
+	g_array[0] = sentinel;
+	g_array[size + 1] = sentinel;
 
 	print_array(size);
 
@@ -54,22 +62,17 @@ void test(int size)
 		// get elem to move
 		int max = 0;
 		struct Elem max_elem = array[max];
-		// check against all, but last element
-		for (int i = 1; i < size - 1; ++i)
+		struct Elem max_sibling = array[-1];
+		for (int i = 0; i < size; ++i)
 		{
 			const struct Elem elem = array[i];
 			const struct Elem sibling = array[i + (elem.dir == L ? -1 : 1)];
-			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !moveable(max, size))
+			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !(max_elem.ch > max_sibling.ch))
 			{
 				max = i;
 				max_elem = elem;
+				max_sibling = sibling;
 			}
-		}
-		// check against last element
-		const struct Elem last = array[size - 1];
-		if ((last.ch > max_elem.ch && moveable(size - 1, size)) || !moveable(max, size))
-		{
-			max = size - 1;
 		}
 
 		if (!moveable(max, size))
