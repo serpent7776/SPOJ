@@ -54,7 +54,7 @@ void test(int size)
 		int max = 0;
 		for (int i = 1; i < size; ++i)
 		{
-			if ((moveable(i, size) && array[i].ch > array[max].ch) || !moveable(max, size))
+			if ((array[i].ch > array[max].ch && moveable(i, size)) || !moveable(max, size))
 			{
 				max = i;
 			}
