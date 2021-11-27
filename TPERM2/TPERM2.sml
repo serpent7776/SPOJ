@@ -52,9 +52,9 @@ fun get_elem_to_move (arr:elem array) =
   end
 
 fun swap arr id1 id2 =
-  let val tmp = Array.sub (arr, id1) in (
+  let val tmp = Array.sub (arr, id1) in
     Array.update (arr, id1, Array.sub (arr, id2));
-    Array.update (arr, id2, tmp))
+    Array.update (arr, id2, tmp)
   end;
 
 fun move_elem arr (idx, el:elem) =
@@ -78,7 +78,7 @@ fun perms arr f = (
       | proc (SOME it) =
           let
             val (idx, el) = it
-          in (
+          in
             () = move_elem arr it;
             () = switch_dirs arr el;
             () = f arr;
@@ -87,7 +87,7 @@ fun perms arr f = (
             in
               proc it'
             end
-          ) end
+          end
   in proc (get_elem_to_move arr)
   end);
 
