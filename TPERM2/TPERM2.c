@@ -53,12 +53,23 @@ void test(int size)
 	{
 		// get elem to move
 		int max = 0;
-		for (int i = 1; i < size; ++i)
+		struct Elem max_elem = array[max];
+		// check against all, but last element
+		for (int i = 1; i < size - 1; ++i)
 		{
-			if ((array[i].ch > array[max].ch && moveable(i, size)) || !moveable(max, size))
+			const struct Elem elem = array[i];
+			const struct Elem sibling = array[i + (elem.dir == L ? -1 : 1)];
+			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !moveable(max, size))
 			{
 				max = i;
+				max_elem = elem;
 			}
+		}
+		// check against last element
+		const struct Elem last = array[size - 1];
+		if ((last.ch > max_elem.ch && moveable(size - 1, size)) || !moveable(max, size))
+		{
+			max = size - 1;
 		}
 
 		if (!moveable(max, size))
@@ -68,7 +79,7 @@ void test(int size)
 		}
 
 		// move elem
-		struct Elem tmp = array[max];
+		const struct Elem tmp = array[max];
 		const int swapped = array[max].dir == L ? max - 1 : max + 1;
 		array[max] = array[swapped];
 		array[swapped] = tmp;
