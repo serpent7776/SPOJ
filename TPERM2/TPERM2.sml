@@ -99,7 +99,7 @@ fun print_elem (elem:elem) =
 
 fun print_elems array = (
   Array.app print_elem array;
-  print "\n"
+  TextIO.output1 (TextIO.stdOut, #"\n")
   );
 
 let val t = read_int () in
