@@ -73,6 +73,7 @@ std::optional<It> get_elem_to_move(const Array& arr)
 			case Dir::R:
 				return nonlast(idx) && smaller_right(idx);
 		}
+		__builtin_unreachable();
 	};
 	auto max_elem = [&](auto id_left, auto id_right)
 	{

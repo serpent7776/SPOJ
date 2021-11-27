@@ -26,6 +26,7 @@ int moveable(int idx, int size)
 		case L: return idx > 0 && array[idx].ch > array[idx - 1].ch;
 		case R: return idx < size - 1 && array[idx].ch > array[idx + 1].ch;
 	}
+	__builtin_unreachable();
 }
 
 void print_array(int size)
