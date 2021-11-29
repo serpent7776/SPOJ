@@ -146,18 +146,8 @@ fn get_elem_to_move<'a>(items: &'a Vec<Elem>) -> Option<It> {
         }
     };
 
-    let mut iter = items.iter().enumerate();
-    match iter.next() {
-        Some(head_it) =>
-        {
-            let mut current_it = head_it;
-            for it in iter {
-                current_it = bigger_moveable_elem(current_it, it)
-            }
-            Some(current_it).filter(moveable)
-        },
-        None => None,
-    }
+    let iter = items.iter().enumerate();
+    iter.reduce(bigger_moveable_elem).filter(moveable)
 }
 
 fn read_int<T: std::str::FromStr>() -> T
