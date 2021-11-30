@@ -23,16 +23,6 @@ static struct Elem g_array[MAX_ARRAY_SIZE + 2];
 
 static struct Elem* array = &g_array[1];
 
-int moveable(int idx, int size)
-{
-	switch (array[idx].dir)
-	{
-		case L: return array[idx].ch > array[idx - 1].ch;
-		case R: return array[idx].ch > array[idx + 1].ch;
-	}
-	__builtin_unreachable();
-}
-
 void print_array(int size)
 {
 	for (int i = 0; i < size; ++i)
@@ -63,19 +53,21 @@ void test(int size)
 		int max = 0;
 		struct Elem max_elem = array[max];
 		struct Elem max_sibling = array[-1];
+		int max_moveable = max_elem.ch > max_sibling.ch;
 		for (int i = 0; i < size; ++i)
 		{
 			const struct Elem elem = array[i];
 			const struct Elem sibling = array[i + (elem.dir == L ? -1 : 1)];
-			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !(max_elem.ch > max_sibling.ch))
+			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !max_moveable)
 			{
 				max = i;
 				max_elem = elem;
 				max_sibling = sibling;
+				max_moveable = max_elem.ch > max_sibling.ch;
 			}
 		}
 
-		if (!moveable(max, size))
+		if (!max_moveable)
 		{
 			// no element can be moved, we're done
 			return;
