@@ -4,16 +4,13 @@
 #include <sysexits.h>
 #include <limits.h>
 
-enum Dir
-{
-	L = 0,
-	R = 1,
-};
+static const char L = 0;
+static const char R = 1;
 
 struct Elem
 {
 	char ch;
-	enum Dir dir;
+	char dir;
 };
 
 #define MAX_ARRAY_SIZE 26
