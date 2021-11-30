@@ -4,7 +4,7 @@
 #include <sysexits.h>
 #include <limits.h>
 
-static const char L = 0;
+static const char L = -1;
 static const char R = 1;
 
 struct Elem
@@ -54,7 +54,7 @@ void test(int size)
 		for (int i = 0; i < size; ++i)
 		{
 			const struct Elem elem = array[i];
-			const struct Elem sibling = array[i + (elem.dir == L ? -1 : 1)];
+			const struct Elem sibling = array[i + elem.dir];
 			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !max_moveable)
 			{
 				max = i;
@@ -72,7 +72,7 @@ void test(int size)
 
 		// move elem
 		const struct Elem tmp = array[max];
-		const int swapped = array[max].dir == L ? max - 1 : max + 1;
+		const int swapped = max + array[max].dir;
 		array[max] = array[swapped];
 		array[swapped] = tmp;
 
@@ -84,7 +84,7 @@ void test(int size)
 			if (array[i].ch > array[max].ch)
 			{
 				// switch L to R and R to L
-				array[i].dir ^= 1;
+				array[i].dir *= -1;
 			}
 		}
 
