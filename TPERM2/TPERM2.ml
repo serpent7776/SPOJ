@@ -25,14 +25,14 @@ let fold_arrayi fn arr =
         let len = Array.length arr in
         if len = 0 then None
         else
-                let res = ref (0, arr.(0)) in
-                let elem = ref (0, arr.(0)) in
-                for i = 1 to (len - 1) do
-                        let next = ref (i, arr.(i)) in
-                        res := fn !res !next;
-                        elem := !next
-                done;
-                Some !res
+                let rec proc res i =
+                        if i < len then
+                                let next = (i, arr.(i)) in
+                                proc (fn res next) (i + 1)
+                        else Some res
+                in
+                let first = (0, arr.(0)) in
+                proc first 1
 
 let option_filter pred = function
         | None -> None
