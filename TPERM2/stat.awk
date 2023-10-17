@@ -9,9 +9,9 @@ NF == 1 {
 }
 
 NF == 6 {
-	stats[name, "r"] += $1;
-	stats[name, "u"] += $3;
-	stats[name, "s"] += $5;
+	stats[name, "r"] += $2;
+	stats[name, "u"] += $4;
+	stats[name, "s"] += $6;
 	stats[name, "+"] += 1;
 }
 

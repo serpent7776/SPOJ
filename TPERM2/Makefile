@@ -69,25 +69,25 @@ check:
 bench:
 	@: > ${BENCH_OUT}
 	@echo "cpp-clang" >> ${BENCH_OUT}
-	./bench ./cpp-clang 2>> ${BENCH_OUT}
+	./bench ./cpp-clang >> ${BENCH_OUT}
 	@echo "cpp-gcc" >> ${BENCH_OUT}
-	./bench ./cpp-gcc 2>> ${BENCH_OUT}
+	./bench ./cpp-gcc >> ${BENCH_OUT}
 	@echo "cpp-ref" >> ${BENCH_OUT}
-	./bench ./cpp-ref 2>> ${BENCH_OUT}
+	./bench ./cpp-ref >> ${BENCH_OUT}
 	@echo "c-gcc" >> ${BENCH_OUT}
-	./bench ./c-gcc 2>> ${BENCH_OUT}
+	./bench ./c-gcc >> ${BENCH_OUT}
 	@echo "c-clang" >> ${BENCH_OUT}
-	./bench ./c-clang 2>> ${BENCH_OUT}
+	./bench ./c-clang >> ${BENCH_OUT}
 	@echo "rust" >> ${BENCH_OUT}
-	./bench ./rust 2>> ${BENCH_OUT}
+	./bench ./rust >> ${BENCH_OUT}
 	@echo "ocaml" >> ${BENCH_OUT}
-	./bench ./ocaml 2>> ${BENCH_OUT}
+	./bench ./ocaml >> ${BENCH_OUT}
 	@echo "sml-mlton" >> ${BENCH_OUT}
-	./bench ./sml-mlton 2>> ${BENCH_OUT}
+	./bench ./sml-mlton >> ${BENCH_OUT}
 	@echo "luajit" >> ${BENCH_OUT}
-	./bench luajit ./luajit 2>> ${BENCH_OUT}
+	./bench luajit ./luajit >> ${BENCH_OUT}
 	@echo "swipl" >> ${BENCH_OUT}
-	./bench ./swipl 2>> ${BENCH_OUT}
+	./bench ./swipl >> ${BENCH_OUT}
 	@awk -f stat.awk < $(BENCH_OUT)
 
 stat:
