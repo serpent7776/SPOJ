@@ -65,7 +65,7 @@ void test(int size)
 		{
 			const struct Elem elem = array[i];
 			const struct Elem sibling = array[i + elem.dir];
-			if ((elem.ch > max_elem.ch && elem.ch > sibling.ch) || !max_moveable)
+			if (((elem.ch > max_elem.ch) & (elem.ch > sibling.ch)) | !max_moveable)
 			{
 				max = i;
 				max_elem = elem;
