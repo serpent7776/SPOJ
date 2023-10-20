@@ -22,11 +22,13 @@ static struct Elem* array = &g_array[1];
 
 void print_array(int size)
 {
+	char buf[size + 1];
 	for (int i = 0; i < size; ++i)
 	{
-		putchar(array[i].ch);
+		buf[i] = array[i].ch;
 	}
-	putchar('\n');
+	buf[size] = 0;
+	puts(buf);
 }
 
 void test(int size)
