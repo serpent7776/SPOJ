@@ -89,14 +89,16 @@ void test(int size)
 		max = swapped;
 
 		// switch dirs
-		for (int i = 0; i < size; ++i)
+		int i = 0;
+		for (; i < size; i+=4)
 		{
-			if (array[i].ch > array[max].ch)
-			{
-				// switch L to R and R to L
-				array[i].dir *= -1;
-			}
+			if (array[i].ch > array[max].ch) array[i].dir *= -1; // switch L to R and R to L
+			if (array[i+1].ch > array[max].ch) array[i+1].dir *= -1;
+			if (array[i+2].ch > array[max].ch) array[i+2].dir *= -1;
+			if (array[i+3].ch > array[max].ch) array[i+3].dir *= -1;
 		}
+		for (; i < size; ++i)
+			if (array[i].ch > array[max].ch) array[i].dir *= -1;
 
 		print_array(size);
 	}
