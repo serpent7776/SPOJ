@@ -108,7 +108,7 @@ void test(int size)
 	}
 }
 
-int main()
+int main(void)
 {
 	int t;
 	if (scanf("%i", &t) != 1)
