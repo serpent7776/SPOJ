@@ -23,7 +23,15 @@ static struct Elem* array = &g_array[1];
 void print_array(int size)
 {
 	char buf[size + 1];
-	for (int i = 0; i < size; ++i)
+	int i = 0;
+	for (i = 0; i < size; i+=4)
+	{
+		buf[i] = array[i].ch;
+		buf[i+1] = array[i+1].ch;
+		buf[i+2] = array[i+2].ch;
+		buf[i+3] = array[i+3].ch;
+	}
+	for (; i < size; ++i)
 	{
 		buf[i] = array[i].ch;
 	}
