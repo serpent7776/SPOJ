@@ -10,7 +10,7 @@ static const char R = 1;
 struct Elem
 {
 	char ch;
-	char dir;
+	signed char dir;
 };
 
 #define MAX_ARRAY_SIZE 26
